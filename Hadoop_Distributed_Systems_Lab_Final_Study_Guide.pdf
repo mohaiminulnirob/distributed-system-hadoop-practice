@@ -1,0 +1,259 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R 12 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 4017 >>
+stream
+0.1 0.1 0.1 rg
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 742 Td (Hadoop Distributed Systems Lab Final Study Guide) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 722 Td () Tj ET
+BT /F1 9.5 Tf 52 709 Td (Learn this in order: HDFS commands and architecture; MapReduce data flow; WordCount;) Tj ET
+BT /F1 9.5 Tf 52 696 Td (combiners and custom Writable values; YARN; job debugging and fault tolerance. Your) Tj ET
+BT /F1 9.5 Tf 52 683 Td (goal is to run every provided job and explain every important line.) Tj ET
+BT /F1 9.5 Tf 52 670 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 657 Td (1. HDFS architecture) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 637 Td () Tj ET
+BT /F1 9.5 Tf 52 624 Td (HDFS stores a file as large blocks distributed across DataNodes. Blocks allow) Tj ET
+BT /F1 9.5 Tf 52 611 Td (parallel storage and processing, replication, and recovery. Hadoop 3 commonly uses a) Tj ET
+BT /F1 9.5 Tf 52 598 Td (128 MB block size, although it is configurable.) Tj ET
+BT /F1 9.5 Tf 52 585 Td () Tj ET
+BT /F1 9.5 Tf 52 572 Td (NameNode stores metadata: directory tree, file permissions, file-to-block mapping,) Tj ET
+BT /F1 9.5 Tf 52 559 Td (and DataNode locations. DataNodes store actual block replicas and report heartbeats) Tj ET
+BT /F1 9.5 Tf 52 546 Td (and block reports. Clients ask the NameNode for locations but transfer data directly) Tj ET
+BT /F1 9.5 Tf 52 533 Td (with DataNodes.) Tj ET
+BT /F1 9.5 Tf 52 520 Td () Tj ET
+BT /F1 9.5 Tf 52 507 Td (Replication factor is the number of copies per block. Production often uses 3,) Tj ET
+BT /F1 9.5 Tf 52 494 Td (improving availability across disk/node/rack failures. A one-node lab cluster) Tj ET
+BT /F1 9.5 Tf 52 481 Td (commonly uses factor 1 because there are no alternate nodes.) Tj ET
+BT /F1 9.5 Tf 52 468 Td () Tj ET
+BT /F1 9.5 Tf 52 455 Td (Secondary NameNode creates checkpoints by merging fsimage and edit logs. It is NOT a) Tj ET
+BT /F1 9.5 Tf 52 442 Td (backup/failover NameNode. High availability instead uses active/standby NameNodes) Tj ET
+BT /F1 9.5 Tf 52 429 Td (and shared edit-log coordination.) Tj ET
+BT /F1 9.5 Tf 52 416 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 403 Td (2. YARN) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 383 Td () Tj ET
+BT /F1 9.5 Tf 52 370 Td (YARN separates resource management from programming models. The ResourceManager) Tj ET
+BT /F1 9.5 Tf 52 357 Td (schedules resources cluster-wide. A NodeManager runs on each machine and) Tj ET
+BT /F1 9.5 Tf 52 344 Td (launches/monitors containers. An ApplicationMaster coordinates one submitted) Tj ET
+BT /F1 9.5 Tf 52 331 Td (application and requests containers for its tasks.) Tj ET
+BT /F1 9.5 Tf 52 318 Td () Tj ET
+BT /F1 9.5 Tf 52 305 Td (A container is an allocation of resources such as memory and vcores on a node.) Tj ET
+BT /F1 9.5 Tf 52 292 Td (Hadoop seeks data locality: run map tasks where their HDFS input blocks are stored) Tj ET
+BT /F1 9.5 Tf 52 279 Td (to reduce network reads.) Tj ET
+BT /F1 9.5 Tf 52 266 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 253 Td (3. MapReduce pipeline) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 233 Td () Tj ET
+BT /F1 9.5 Tf 52 220 Td (InputFormat creates logical splits and RecordReader makes records. TextInputFormat) Tj ET
+BT /F1 9.5 Tf 52 207 Td (normally provides mapper records as \(byte offset, line of text\).) Tj ET
+BT /F1 9.5 Tf 52 194 Td () Tj ET
+BT /F1 9.5 Tf 52 181 Td (Map emits zero or more intermediate key/value pairs. WordCount maps each token to) Tj ET
+BT /F1 9.5 Tf 52 168 Td (\(word, 1\). Hadoop buffers, partitions, sorts, and spills map output locally.) Tj ET
+BT /F1 9.5 Tf 52 155 Td () Tj ET
+BT /F1 9.5 Tf 52 142 Td (Partitioning assigns each key to a reducer, normally using hash\(key\). Equal keys) Tj ET
+BT /F1 9.5 Tf 52 129 Td (always go to the same reducer. Shuffle transfers each reducer's partition from all) Tj ET
+BT /F1 9.5 Tf 52 116 Td (mappers. Sort/group gathers all values for one key.) Tj ET
+BT /F1 9.5 Tf 52 103 Td () Tj ET
+0.35 0.35 0.35 rg
+BT /F1 8 Tf 52 28 Td (Hadoop Lab Final Study Guide  |  Page 1 of 4) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 3973 >>
+stream
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 742 Td (Reduce is called once per distinct key as reduce\(key, Iterable<values>\). WordCount) Tj ET
+BT /F1 9.5 Tf 52 729 Td (receives \(word, [1,1,...]\) and emits \(word,total\). Each reducer writes one part-r-) Tj ET
+BT /F1 9.5 Tf 52 716 Td (xxxxx output file. A zero-reducer job is map-only.) Tj ET
+BT /F1 9.5 Tf 52 703 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 690 Td (4. Code template and types) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 670 Td () Tj ET
+BT /F1 9.5 Tf 52 657 Td (Mapper<KEYIN, VALUEIN, KEYOUT, VALUEOUT> defines the four boundary types.) Tj ET
+BT /F1 9.5 Tf 52 644 Td (Reducer<KEYIN, VALUEIN, KEYOUT, VALUEOUT> input types must equal mapper output) Tj ET
+BT /F1 9.5 Tf 52 631 Td (types.) Tj ET
+BT /F1 9.5 Tf 52 618 Td () Tj ET
+BT /F1 9.5 Tf 52 605 Td (Use Hadoop Writables across framework boundaries: Text, IntWritable, LongWritable,) Tj ET
+BT /F1 9.5 Tf 52 592 Td (DoubleWritable, NullWritable. Driver essentials are setJarByClass, setMapperClass,) Tj ET
+BT /F1 9.5 Tf 52 579 Td (setReducerClass, final output types, input/output paths, and waitForCompletion.) Tj ET
+BT /F1 9.5 Tf 52 566 Td () Tj ET
+BT /F1 9.5 Tf 52 553 Td (If mapper output types differ from reducer final output types, call) Tj ET
+BT /F1 9.5 Tf 52 540 Td (setMapOutputKeyClass and setMapOutputValueClass. TopNWords requires this because it) Tj ET
+BT /F1 9.5 Tf 52 527 Td (maps NullWritable/Text but reduces Text/IntWritable.) Tj ET
+BT /F1 9.5 Tf 52 514 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 501 Td (5. Combiner: essential exam topic) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 481 Td () Tj ET
+BT /F1 9.5 Tf 52 468 Td (A combiner is an optional local pre-aggregation step that reduces network traffic.) Tj ET
+BT /F1 9.5 Tf 52 455 Td (Hadoop may call it zero, one, or multiple times; therefore it must always preserve) Tj ET
+BT /F1 9.5 Tf 52 442 Td (correctness.) Tj ET
+BT /F1 9.5 Tf 52 429 Td () Tj ET
+BT /F1 9.5 Tf 52 416 Td (Safe examples are associative and commutative operations such as sum, count, min,) Tj ET
+BT /F1 9.5 Tf 52 403 Td (and max. WordCount can reuse its sum reducer as a combiner.) Tj ET
+BT /F1 9.5 Tf 52 390 Td () Tj ET
+BT /F1 9.5 Tf 52 377 Td (A naive average combiner is wrong. An average of averages gives unequal-sized groups) Tj ET
+BT /F1 9.5 Tf 52 364 Td (equal weight. Instead send \(sum,count\), add both fields locally and globally, and) Tj ET
+BT /F1 9.5 Tf 52 351 Td (calculate sum/count only at the end.) Tj ET
+BT /F1 9.5 Tf 52 338 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 325 Td (6. Custom Writable: average word length) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 305 Td () Tj ET
+BT /F1 9.5 Tf 52 292 Td (AverageWordLengthByLetter maps each cleaned word to \(first letter,) Tj ET
+BT /F1 9.5 Tf 52 279 Td (SumCount\(length,1\)\). The reducer totals sum and count, then formats average =) Tj ET
+BT /F1 9.5 Tf 52 266 Td (totalSum / totalCount.) Tj ET
+BT /F1 9.5 Tf 52 253 Td () Tj ET
+BT /F1 9.5 Tf 52 240 Td (SumCount implements Writable: a public no-argument constructor; write\(DataOutput\);) Tj ET
+BT /F1 9.5 Tf 52 227 Td (readFields\(DataInput\). Read fields in exactly the same order used by write. Custom) Tj ET
+BT /F1 9.5 Tf 52 214 Td (Writable lets compound data survive Hadoop serialization during shuffle.) Tj ET
+BT /F1 9.5 Tf 52 201 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 188 Td (7. Top-N pattern) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 168 Td () Tj ET
+BT /F1 9.5 Tf 52 155 Td (TopNWords reads WordCount output. Each mapper retains local top candidates, reducing) Tj ET
+BT /F1 9.5 Tf 52 142 Td (data sent over the network. It emits NullWritable so all candidates share one key,) Tj ET
+BT /F1 9.5 Tf 52 129 Td (and one reducer produces a global Top-N.) Tj ET
+BT /F1 9.5 Tf 52 116 Td () Tj ET
+BT /F1 9.5 Tf 52 103 Td (setNumReduceTasks\(1\) makes the single global reducer explicit. This is correct but) Tj ET
+0.35 0.35 0.35 rg
+BT /F1 8 Tf 52 28 Td (Hadoop Lab Final Study Guide  |  Page 2 of 4) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 3614 >>
+stream
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 742 Td (can become a bottleneck. At scale use multi-stage or distributed top-K designs.) Tj ET
+BT /F1 9.5 Tf 52 729 Td (Note: TreeMap<Integer,String> overwrites ties; a robust version needs a) Tj ET
+BT /F1 9.5 Tf 52 716 Td (collection/composite key and a tie-breaker.) Tj ET
+BT /F1 9.5 Tf 52 703 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 690 Td (8. Command drill) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 670 Td () Tj ET
+BT /F1 9.5 Tf 52 657 Td (Compile: javac -classpath $\(hadoop classpath\) -d classes src/WordCount.java) Tj ET
+BT /F1 9.5 Tf 52 644 Td () Tj ET
+BT /F1 9.5 Tf 52 631 Td (Package: cd classes && jar -cvf ../wordcount.jar . && cd ..) Tj ET
+BT /F1 9.5 Tf 52 618 Td () Tj ET
+BT /F1 9.5 Tf 52 605 Td (Upload: hdfs dfs -mkdir -p /practice/input ; hdfs dfs -put data/sample.txt) Tj ET
+BT /F1 9.5 Tf 52 592 Td (/practice/input) Tj ET
+BT /F1 9.5 Tf 52 579 Td () Tj ET
+BT /F1 9.5 Tf 52 566 Td (Run: hadoop jar wordcount.jar WordCount /practice/input /practice/wc-output) Tj ET
+BT /F1 9.5 Tf 52 553 Td () Tj ET
+BT /F1 9.5 Tf 52 540 Td (Inspect: hdfs dfs -cat /practice/wc-output/part-r-00000) Tj ET
+BT /F1 9.5 Tf 52 527 Td () Tj ET
+BT /F1 9.5 Tf 52 514 Td (Essential HDFS: hdfs dfs -ls / ; -mkdir -p /dir ; -put local /dir ; -get /dir/file .) Tj ET
+BT /F1 9.5 Tf 52 501 Td (; -cat /file ; -cp /src /dst ; -mv /src /dst ; -rm /file ; -rm -r /dir ; -du -h / ;) Tj ET
+BT /F1 9.5 Tf 52 488 Td (-df -h /.) Tj ET
+BT /F1 9.5 Tf 52 475 Td () Tj ET
+BT /F1 9.5 Tf 52 462 Td (Health/debug: hdfs dfsadmin -report ; hdfs fsck /dir -files -blocks.) Tj ET
+BT /F1 9.5 Tf 52 449 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 436 Td (9. Debugging and pitfalls) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 416 Td () Tj ET
+BT /F1 9.5 Tf 52 403 Td (Hadoop refuses to overwrite an output directory. If rerunning, use a fresh output) Tj ET
+BT /F1 9.5 Tf 52 390 Td (path or remove only the old output: hdfs dfs -rm -r /practice/wc-output. Confirm the) Tj ET
+BT /F1 9.5 Tf 52 377 Td (path first; do not delete input.) Tj ET
+BT /F1 9.5 Tf 52 364 Td () Tj ET
+BT /F1 9.5 Tf 52 351 Td (For failure: first use hdfs dfs -ls to validate paths, then check jar/class names,) Tj ET
+BT /F1 9.5 Tf 52 338 Td (driver types, permissions, and terminal/YARN logs. Common errors: missing map-output) Tj ET
+BT /F1 9.5 Tf 52 325 Td (type configuration, wrong class name, unsafe combiner, output already exists, and) Tj ET
+BT /F1 9.5 Tf 52 312 Td (assuming output is one globally sorted file with multiple reducers.) Tj ET
+BT /F1 9.5 Tf 52 299 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 286 Td (10. Viva answers to rehearse) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 266 Td () Tj ET
+BT /F1 9.5 Tf 52 253 Td (Why same key to same reducer? Aggregation needs all values for a key together;) Tj ET
+BT /F1 9.5 Tf 52 240 Td (partitioning and shuffle guarantee it.) Tj ET
+BT /F1 9.5 Tf 52 227 Td () Tj ET
+BT /F1 9.5 Tf 52 214 Td (Is a combiner guaranteed? No. Its result must be correct whether it runs never,) Tj ET
+BT /F1 9.5 Tf 52 201 Td (once, or many times.) Tj ET
+BT /F1 9.5 Tf 52 188 Td () Tj ET
+BT /F1 9.5 Tf 52 175 Td (NameNode vs DataNode? NameNode manages metadata; DataNodes store replicas and serve) Tj ET
+BT /F1 9.5 Tf 52 162 Td (block bytes.) Tj ET
+BT /F1 9.5 Tf 52 149 Td () Tj ET
+BT /F1 9.5 Tf 52 136 Td (What if a node fails? YARN retries affected tasks; HDFS detects missing DataNodes) Tj ET
+BT /F1 9.5 Tf 52 123 Td (via heartbeats and re-replicates blocks from surviving replicas.) Tj ET
+BT /F1 9.5 Tf 52 110 Td () Tj ET
+0.35 0.35 0.35 rg
+BT /F1 8 Tf 52 28 Td (Hadoop Lab Final Study Guide  |  Page 3 of 4) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 1201 >>
+stream
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 742 Td (Why a custom Writable? To serialize a multi-field intermediate value such as) Tj ET
+BT /F1 9.5 Tf 52 729 Td (\(sum,count\) correctly and efficiently.) Tj ET
+BT /F1 9.5 Tf 52 716 Td () Tj ET
+0.06 0.20 0.38 rg
+BT /F2 15 Tf 52 703 Td (Final 90-minute plan) Tj ET
+0.1 0.1 0.1 rg
+BT /F1 9.5 Tf 52 683 Td () Tj ET
+BT /F1 9.5 Tf 52 670 Td (15 min: draw HDFS and YARN. 20 min: write WordCount from memory and explain each) Tj ET
+BT /F1 9.5 Tf 52 657 Td (type. 20 min: implement sum/count Writable average. 15 min: run all three repository) Tj ET
+BT /F1 9.5 Tf 52 644 Td (jobs and fix an output-path error. 10 min: command drill. 10 min: answer viva) Tj ET
+BT /F1 9.5 Tf 52 631 Td (questions aloud.) Tj ET
+BT /F1 9.5 Tf 52 618 Td () Tj ET
+BT /F1 9.5 Tf 52 605 Td (Exam checklist: input exists; output path is new; Writable types match; map-output) Tj ET
+BT /F1 9.5 Tf 52 592 Td (classes set if different; global result has appropriate reducer design; combiner is) Tj ET
+BT /F1 9.5 Tf 52 579 Td (safe; part-r files and logs are inspected.) Tj ET
+BT /F1 9.5 Tf 52 566 Td () Tj ET
+0.35 0.35 0.35 rg
+BT /F1 8 Tf 52 28 Td (Hadoop Lab Final Study Guide  |  Page 4 of 4) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000135 00000 n 
+0000000205 00000 n 
+0000000280 00000 n 
+0000004348 00000 n 
+0000004484 00000 n 
+0000008508 00000 n 
+0000008644 00000 n 
+0000012309 00000 n 
+0000012446 00000 n 
+0000013699 00000 n 
+trailer
+<< /Size 13 /Root 1 0 R >>
+startxref
+13837
+%EOF

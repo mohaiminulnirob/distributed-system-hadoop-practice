@@ -1,0 +1,2 @@
+Hadoop is fast and scalable. 
+MapReduce handles large volumes of data. 

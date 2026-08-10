@@ -1,0 +1,3 @@
+Hadoop powers big data applications. 
+MapReduce is a powerful tool in distributed computing.
+
