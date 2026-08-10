@@ -1,0 +1,41 @@
+# 1. Start Hadoop
+sudo service ssh start
+start-dfs.sh
+start-yarn.sh
+Jps
+# 2. Create project
+mkdir -p ~/hadoop-practice/Problem1
+cd ~/hadoop-practice/Problem1
+
+# 3. Create input
+nano input.txt
+
+# 4. Create HDFS input directory
+hdfs dfs -mkdir -p /problem1/input
+
+# 5. Upload input
+hdfs dfs -put input.txt /problem1/input
+
+# 6. Verify input
+hdfs dfs -cat /problem1/input/input.txt
+
+# 7. Write Java program
+nano ProblemName.java
+
+# 8. Compile
+javac -classpath "$(hadoop classpath)" -d . ProblemName.java
+
+# 9. Create JAR
+jar -cvf ProblemName.jar ProblemName*.class
+
+# 10. Remove previous output if necessary
+hdfs dfs -rm -r /problem1/output
+
+# 11. Run
+hadoop jar Problem1.jar Problem1 /problem1/input /problem1/output
+
+# 12. Check output
+hdfs dfs -ls /problem1/output
+
+# 13. Read result
+hdfs dfs -cat /problem1/output/part-r-00000
