@@ -39,3 +39,15 @@ hdfs dfs -ls /problem1/output
 
 # 13. Read result
 hdfs dfs -cat /problem1/output/part-r-00000
+
+To show multiple mapper and reducer:
+hdfs dfs -D dfs.blocksize=1048576 -put input.txt /Question3/input3
+
+<property>
+        <name>dfs.blocksize</name>
+        <value>67108864</value>
+</property>
+nano $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+
+ls $HADOOP_HOME/etc/hadoop/
+hdfs getconf -confKey dfs.blocksize
