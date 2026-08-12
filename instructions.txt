@@ -51,3 +51,6 @@ nano $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 
 ls $HADOOP_HOME/etc/hadoop/
 hdfs getconf -confKey dfs.blocksize
+
+http://127.0.0.1:9870/dfshealth.html#tab-overview
+9870
