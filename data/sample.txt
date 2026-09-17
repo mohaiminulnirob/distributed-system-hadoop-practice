@@ -1,0 +1,10 @@
+Hadoop is an open source framework for distributed storage and distributed processing.
+HDFS stores data across many machines and replicates each block for fault tolerance.
+YARN manages cluster resources and schedules applications like MapReduce and Spark.
+MapReduce splits work into a map phase and a reduce phase connected by a shuffle and sort step.
+The NameNode tracks metadata while DataNodes store the actual blocks of data.
+Distributed systems must handle failure, replication, consistency, and coordination.
+A good distributed system stays available even when individual machines fail.
+Hadoop was inspired by papers from Google describing the Google File System and MapReduce.
+Fault tolerance in HDFS comes from replicating each block across multiple DataNodes.
+YARN separates resource management from the MapReduce programming model.
